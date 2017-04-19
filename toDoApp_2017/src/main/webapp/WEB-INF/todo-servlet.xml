@@ -12,19 +12,27 @@
     http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<mvc:annotation-driven />
-	<mvc:resources location="/images/" mapping="/images/**"></mvc:resources>
-	
+
 	
 	<!--controller and services scan -->
 	<context:component-scan base-package="com.bridgelabz.toDoApp.controller" />
 	<context:component-scan base-package="com.bridgelabz.toDoApp.service" />
 	
-	
-	<bean id="userService" class="com.bridgelabz.toDoApp.service.UserServiceImpl"></bean>
-	<bean id="userDao" class="com.bridgelabz.toDoApp.dao.UserDaoImpl"></bean>
+	<!-- beans creation for user -->
+	<bean id="userService" class="com.bridgelabz.toDoApp.service.serviceImpl.UserServiceImpl"></bean>
+	<bean id="userDao" class="com.bridgelabz.toDoApp.dao.daoImpl.UserDaoImpl"></bean>
 	<bean id="userValidation" class="com.bridgelabz.toDoApp.vlidator.UserValidation"></bean>
 	
 	
+	<!-- beans creation for ToDo manager -->
+	<bean id="toDoService" class="com.bridgelabz.toDoApp.service.serviceImpl.ToDoServiceImpl"></bean>
+	<bean id="toDoDao" class="com.bridgelabz.toDoApp.dao.daoImpl.ToDoDaoImpl"></bean>
+	
+
+
+
+	<!-- View Folder -->
+	<mvc:resources location="/images/" mapping="/images/**"></mvc:resources>
 
 	<!--To specify the view components -->
 	<bean
@@ -56,11 +64,14 @@
 				<value>
 					com.bridgelabz.toDoApp.model.User
 				</value>
+				<value>
+					com.bridgelabz.toDoApp.model.ToDo
+				</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.dialect"> org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.dialect"> org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>

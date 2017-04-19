@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.toDoApp.model.User;
-import com.bridgelabz.toDoApp.service.UserService;
+import com.bridgelabz.toDoApp.service.serviceInterface.UserService;
 
 @RestController
 public class LoginController {
@@ -28,9 +29,11 @@ public class LoginController {
 	public ResponseEntity<String> logIn(@RequestBody Map<String,String> loginMap, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
 		
 		
-		User user = userService.logIn(loginMap.get("email"),loginMap.get("password"));
+		User user = userService.authUser(loginMap.get("email"),loginMap.get("password"));
 		
 		if(user != null) {
+			HttpSession session = request.getSession(true);
+			session.setAttribute("user", user);
 			return new ResponseEntity<String>("{status:'success', message:'login completed'}",HttpStatus.OK);
 		}
 		else {

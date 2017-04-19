@@ -19,6 +19,7 @@ public class UserValidation implements Validator{
 											+"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private static String STRING_PATTERN = "[a-zA-Z]+";
 	private static String MOBILE_PATTERN = "[0-9]{10}";
+	private static String PASSWORD_PATTERN = "[A-Za-z0-9]{5,10}";
 	
 	@Override
 	public boolean supports(Class<?> arg0) {
@@ -64,6 +65,18 @@ public class UserValidation implements Validator{
 			matcher = pattern.matcher(user.getMobile());
 			if( !matcher.matches() ) {
 				errors.rejectValue("mobile", "mobile.required", "Enter correct mobile number");
+			}
+		}
+		
+		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required.password", "Password can not be empty");
+		
+		if( user.getPassword() != null && !user.getPassword().isEmpty()) {
+			
+			pattern = Pattern.compile(PASSWORD_PATTERN);
+			matcher = pattern.matcher(user.getPassword());
+			if( !matcher.matches() ) {
+				errors.rejectValue("password", "password.required", "password length must be between 5 to 10");
 			}
 		}
 		

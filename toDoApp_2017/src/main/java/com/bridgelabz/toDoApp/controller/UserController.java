@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgelabz.toDoApp.model.User;
-import com.bridgelabz.toDoApp.service.UserService;
+import com.bridgelabz.toDoApp.service.serviceInterface.UserService;
 import com.bridgelabz.toDoApp.vlidator.UserValidation;
 
 

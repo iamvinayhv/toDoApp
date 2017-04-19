@@ -16,7 +16,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GenericGenerator(name="gen",strategy="increment")
+	@GenericGenerator(name="gen", strategy="increment")
 	@GeneratedValue(generator="gen")
 	private int id;
 	private String firstName;
