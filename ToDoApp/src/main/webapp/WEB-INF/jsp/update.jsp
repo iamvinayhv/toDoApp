@@ -14,7 +14,7 @@
 <table style="color:blue">
 
 
-<tr><td>Title	</td><td><input type="text" name="title" placeholder="title"></td></tr>
+<tr><td>Title	</td><td><input  type="text" name="title" placeholder="title"></td></tr>
 <tr><td>Note	</td><td><input type="text" name="note" placeholder="note"></td></tr>
 <tr><td>Remainder	</td><td><input type="text" name="remainder" placeholder="yyyy-mon-dd hr:min:ss"></td></tr>
 

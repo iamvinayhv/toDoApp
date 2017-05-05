@@ -32,6 +32,9 @@
 
 	<!-- View Folder -->
 	<mvc:resources location="/images/" mapping="/images/**"></mvc:resources>
+	
+	<mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+	<mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
 
 	<!--To specify the view components -->
 	<bean

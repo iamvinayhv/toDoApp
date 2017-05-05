@@ -29,14 +29,10 @@ public class ToDoController {
 	@RequestMapping(value="/toDoHome")
 	public ModelAndView toDoHome(HttpServletRequest request,HttpServletResponse response) {
 		
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
 		if( user != null) {
-			
-			System.out.println(session);
-			System.out.println(user);
-			
 			
 			List<ToDo> todoList = getNotes(user.getId());
 			
@@ -64,7 +60,7 @@ public class ToDoController {
 	@RequestMapping(value="/addNewNote")
 	public ModelAndView addNotePage(HttpServletRequest request, HttpServletResponse response) {
 		
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
 		if(user != null ) {
@@ -79,16 +75,23 @@ public class ToDoController {
 	@RequestMapping(value="/addNote",method=RequestMethod.POST)
 	public ModelAndView addNote(ToDo toDo, HttpServletRequest request, HttpServletResponse response) {
 	
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
-		if( user != null) {
+		if( user != null ) {
 			
-			toDo.setUser(user);
+			if(toDo.getNote() != "" && toDo.getNote() != null) {
+				
+				toDo.setUser(user);
+				toDoService.addNote(toDo);
+				return new ModelAndView("redirect:/toDoHome");
+			}
+			else {
+				return new ModelAndView("redirect:/toDoHome");
+			}
 			
-			toDoService.addNote(toDo);
 			
-			return new ModelAndView("redirect:/toDoHome");
+			
 		}
 		else {
 			return new ModelAndView("redirect:/signInPage");
@@ -117,7 +120,7 @@ public class ToDoController {
 	@RequestMapping(value="deleteNote")
 	public ModelAndView deleteNote(@RequestParam("id") int id, HttpServletRequest request, HttpServletResponse response) {
 	
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
 		if( user != null ) {
@@ -137,7 +140,7 @@ public class ToDoController {
 	@RequestMapping(value="update")
 	public ModelAndView update(@RequestParam("id")int id, HttpServletRequest request, HttpServletResponse response) {
 		
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
 		if(user != null) {
@@ -151,11 +154,11 @@ public class ToDoController {
 	
 	
 	
-	@RequestMapping(value="updateNote")
+	@RequestMapping(value="updateNote", method=RequestMethod.POST)
 	public ModelAndView updateNote(ToDo toDo , HttpServletRequest request, HttpServletResponse response) {
 		
-		HttpSession session = request.getSession(false);
-		toDo.setId(todoId);
+		HttpSession session = request.getSession();
+		
 		User user = (User) session.getAttribute("user");
 		
 		if(session != null && user != null) {
