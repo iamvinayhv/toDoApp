@@ -149,8 +149,9 @@ input[type=text] {
 	background-color: #d3d7cf;
 	border-radius: 5px;
 	padding-left: 30px;
-	padding-top: 30px;
+	padding-top: 20px;
 	padding-right: 30px;
+	padding-bottom:20px;
 	margin-left: 500px;
 	display: table-row;
 	position: fixed;
@@ -163,11 +164,12 @@ input[type=text] {
 	background-color: white;
 	border-radius: 5px;
 	padding-left: 30px;
-	padding-top: 30px;
+	padding-top: 20px;
 	padding-right: 30px;
 	margin-left: 500px;
 	display: table-row;
 	position: fixed;
+	padding-bottom: 10px;
 
 }
 
@@ -177,14 +179,15 @@ input[type=text] {
 	margin-right: 325px;
 	
 }
-
+/* 
 #container .list i {
 	max-width:400px;
 	min-width: 200px;
 	min-height: 100px;
 	margin-left: 200px;
 	
-}
+	
+} */
 
 #container .grid i {
 	float: left;
@@ -195,5 +198,6 @@ input[type=text] {
 	/* border-right: 1px dotted #CCC; */
 	/* border-bottom: 1px dotted #CCC; */
 	margin-left: 30px;
-	margin-bottom: auto;
+	
+	/* box-shadow: 1px 1px 1px 1px; */
 }

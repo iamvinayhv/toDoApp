@@ -33,7 +33,7 @@ public class LogOutController {
 			return new ModelAndView("redirect:/signInPage");
 		}
 		else {
-			return new ModelAndView("redirect:/signInPage");
+			return new ModelAndView("redirect:/signUp");
 		}
 	}
 

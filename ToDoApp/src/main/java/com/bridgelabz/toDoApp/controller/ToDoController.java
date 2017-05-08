@@ -8,17 +8,26 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bridgelabz.toDoApp.model.ToDo;
 import com.bridgelabz.toDoApp.model.User;
 import com.bridgelabz.toDoApp.service.serviceInterface.ToDoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 
-@Controller
+@RestController
 public class ToDoController {
 
 	@Autowired
@@ -56,45 +65,49 @@ public class ToDoController {
 	
 	
 	
+	@RequestMapping(value="/addNote",method=RequestMethod.POST,produces="application/json")
+	public ResponseEntity<String> addNote(ToDo toDo, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
 	
-	@RequestMapping(value="/addNewNote")
-	public ModelAndView addNotePage(HttpServletRequest request, HttpServletResponse response) {
-		
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		
-		if(user != null ) {
-			return new ModelAndView("addNote");
-		}
-		else {
-			return new ModelAndView("redirect:/signInPage");
-		}
-	}
-	
-	
-	@RequestMapping(value="/addNote",method=RequestMethod.POST)
-	public ModelAndView addNote(ToDo toDo, HttpServletRequest request, HttpServletResponse response) {
-	
+		System.out.println("kunfu");
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
 		if( user != null ) {
 			
-			if(toDo.getNote() != "" && toDo.getNote() != null) {
+			if(toDo.getNote() != "" || toDo.getTitle() != "") {
 				
 				toDo.setUser(user);
 				toDoService.addNote(toDo);
-				return new ModelAndView("redirect:/toDoHome");
+				System.out.println("kkkkk");
+				
+				
+				ObjectMapper mapper = new ObjectMapper();
+				ObjectNode root = mapper.createObjectNode();
+				
+				//ObjectNode todo = mapper.createObjectNode();
+				//todo.put("id", toDo.getId());
+				
+				root.put("status", "success");
+				
+				toDo.setUser(null);
+				
+				root.putPOJO("todo", toDo); 
+				
+				// set("todo", todo);
+				String lstr = mapper.writeValueAsString(root);
+				System.out.println( lstr ); 
+				return new ResponseEntity<String>(lstr, HttpStatus.OK);
 			}
 			else {
-				return new ModelAndView("redirect:/toDoHome");
+				System.out.println("gggggggg");
+				return new ResponseEntity<String>("{status:'failure'}", HttpStatus.NOT_ACCEPTABLE);
 			}
 			
 			
 			
 		}
 		else {
-			return new ModelAndView("redirect:/signInPage");
+			return new ResponseEntity<String>("{status:'failure'}", HttpStatus.NOT_ACCEPTABLE);
 		}
 		
 		
