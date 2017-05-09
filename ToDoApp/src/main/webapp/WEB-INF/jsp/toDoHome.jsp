@@ -64,6 +64,9 @@
 							<a href="<c:url value='signOut'/>">SignOut</a>
 							
 						</div>
+						
+						
+						
 
 <div id="full">
 		<div id="nav">
@@ -96,9 +99,9 @@
 							<div id="${temp.id}">	
 								<div  id="note"  onclick="popUp('${temp.title}','${temp.note}','${temp.remainder}')" style="word-wrap: break-word; padding-top: 10px;padding-left:15px;padding-right:15px; background-color: #eeeeec;">
 									
-									<b style="margin-left: 15px;">${temp.title} </b><br> <br>
-									<span style="margin-left: 15px;">${temp.note} </span><br> <br>
-									<span style="margin-left: 15px;">${temp.remainder}</span> <br>
+									<div ><b style="margin-left: 15px;">${temp.title} </div></b><br>
+									<div style="margin-left: 15px;">${temp.note} </div><br> <br>
+									<div style="margin-left: 15px;">${temp.remainder}</div>
 									
 								</div>
 								
